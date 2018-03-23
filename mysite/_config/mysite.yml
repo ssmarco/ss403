@@ -1,0 +1,23 @@
+---
+Name: myproject
+---
+SilverStripe\Core\Manifest\ModuleManifest:
+  project: mysite
+
+Product:
+  extensions:
+    - ProductExtension
+    - 'Marcz\Search\Extensions\SearchListDataListener'
+
+# SilverStripe\ORM\DataObject:
+#   extensions:
+#     - Marcz\Search\Extensions\SearchListDataObject
+
+Marcz\Search\Config:
+  indices:
+    - name: 'Products'
+      class: 'Product'
+  clients:
+    - name: 'Algolia'
+      write: true
+      class: 'Marcz\Algolia\AlgoliaClient'
