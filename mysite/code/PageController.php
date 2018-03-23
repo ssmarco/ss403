@@ -104,29 +104,29 @@ class PageController extends ContentController
             $productArray[$column] = $formField->dataValue();
         }
 
-        foreach ($hasOne as $column => $className) {
-            $productArray[$column] = $product->{$column}()->getTitle();
-        }
+        // foreach ($hasOne as $column => $className) {
+        //     $productArray[$column] = $product->{$column}()->getTitle();
+        // }
 
-        foreach ($hasMany as $column => $className) {
-            $items = [];
-            foreach ($product->{$column}() as $item) {
-                $items[] = $item->getTitle();
-            }
-            if ($items) {
-                $productArray[$column] = $items;
-            }
-        }
+        // foreach ($hasMany as $column => $className) {
+        //     $items = [];
+        //     foreach ($product->{$column}() as $item) {
+        //         $items[] = $item->getTitle();
+        //     }
+        //     if ($items) {
+        //         $productArray[$column] = $items;
+        //     }
+        // }
 
-        foreach ($manyMany as $column => $className) {
-            $items = [];
-            foreach ($product->{$column}() as $item) {
-                $items[] = $item->getTitle();
-            }
-            if ($items) {
-                $productArray[$column] = $items;
-            }
-        }
+        // foreach ($manyMany as $column => $className) {
+        //     $items = [];
+        //     foreach ($product->{$column}() as $item) {
+        //         $items[] = $item->getTitle();
+        //     }
+        //     if ($items) {
+        //         $productArray[$column] = $items;
+        //     }
+        // }
 
         $response = new HTTPResponse(Convert::array2json($productArray));
         $response->addHeader('Content-Type', 'application/json; charset=utf-8');
@@ -153,24 +153,29 @@ class PageController extends ContentController
 
     public function readjson()
     {
-        $file  = BASE_PATH . '/wiki-articles-1000.json';
-        $lines = file($file);
+        $file    = BASE_PATH . '/wiki-articles-1000.json';
+        $lines   = file($file);
+        $counter = 1000;
 
         // Loop through our array, show HTML source as HTML source; and line numbers too.
         foreach ($lines as $line_num => $line) {
-            $json = json_decode($line, true);
-            parse_str(parse_url($json['url'], PHP_URL_QUERY), $urlQuery);
+            // $counter--;
+            // $json = json_decode($line, true);
+            // parse_str(parse_url($json['url'], PHP_URL_QUERY), $urlQuery);
 
-            $content        = '<p>%1$s</p><p><a target="_blank" href="%2$s">%2$s</a></p>';
-            $page           = new Page();
-            $page->ID       = $urlQuery['curid'];
-            $page->Title    = $json['title'];
-            $page->ParentID = 2; //About Us page
-            $page->Content  = sprintf($content, $json['body'], $json['url']);
-            $page->write();
-            $page->copyVersionToStage(Versioned::DRAFT, Versioned::LIVE);
-            $page->flushCache();
+            // $content        = '<p>%1$s</p><p><a target="_blank" href="%2$s">%2$s</a></p>';
+            // $page           = new Page();
+            // $page->ID       = $urlQuery['curid'];
+            // $page->Title    = $json['title'];
+            // $page->ParentID = 2; //About Us page
+            // $page->Content  = sprintf($content, $json['body'], $json['url']);
+            // $page->write();
+            // $page->copyVersionToStage(Versioned::DRAFT, Versioned::LIVE);
+            // $page->flushCache();
 
+            // if ($counter < 1) {
+            //     break;
+            // }
             // echo "Line #<b>{$line_num}</b> : " . var_export($page->toMap()) . "<br />\n";
             // echo "Line #<b>{$line_num}</b> : " . var_export($json) . "<br />\n";
         }
@@ -184,38 +189,39 @@ class PageController extends ContentController
         $file    = BASE_PATH . '/ecommerce.json';
         $json    = json_decode(file_get_contents($file));
         $counter = 1000;
+        die('not executed');
         foreach ($json as $record) {
-            $counter--;
-            $brand   = $this->getDataObject(ProdBrand::class, $record->brand);
-            $type    = $this->getDataObject(ProdType::class, $record->type);
-            $range   = $this->getDataObject(ProdPriceRange::class, $record->price_range);
-            $product = $this->getDataObject(Product::class, $record->objectID);
-            if (!$product) {
-                $product               = Product::create();
-                $product->Name         = $record->name;
-                $product->Content      = $record->description;
-                $product->Price        = $record->price;
-                $product->Image        = $record->image;
-                $product->Url          = $record->url;
-                $product->FreeShipping = $record->free_shipping;
-                $product->Popularity   = $record->popularity;
-                $product->Rating       = $record->rating;
-                $product->ID           = $record->objectID;
-                $product->BrandID      = $brand->ID;
-                $product->TypeID       = $type->ID;
-                $product->PriceRangeID = $range->ID;
-                $product->write();
-            }
+            // $counter--;
+            // $brand   = $this->getDataObject(ProdBrand::class, $record->brand);
+            // $type    = $this->getDataObject(ProdType::class, $record->type);
+            // $range   = $this->getDataObject(ProdPriceRange::class, $record->price_range);
+            // $product = $this->getDataObject(Product::class, $record->objectID);
+            // if (!$product) {
+            //     $product               = Product::create();
+            //     $product->Name         = $record->name;
+            //     $product->Content      = $record->description;
+            //     $product->Price        = $record->price;
+            //     $product->Image        = $record->image;
+            //     $product->Url          = $record->url;
+            //     $product->FreeShipping = $record->free_shipping;
+            //     $product->Popularity   = $record->popularity;
+            //     $product->Rating       = $record->rating;
+            //     $product->ID           = $record->objectID;
+            //     $product->BrandID      = $brand->ID;
+            //     $product->TypeID       = $type->ID;
+            //     $product->PriceRangeID = $range->ID;
+            //     $product->write();
+            // }
 
-            foreach ($record->categories as $name) {
-                if ($category = $this->getDataObject(ProdCategory::class, $name)) {
-                    $product->Categories()->add($category->ID);
-                }
-            }
+            // foreach ($record->categories as $name) {
+            //     if ($category = $this->getDataObject(ProdCategory::class, $name)) {
+            //         $product->Categories()->add($category->ID);
+            //     }
+            // }
 
-            if ($counter < 1) {
-                break;
-            }
+            // if ($counter < 1) {
+            //     break;
+            // }
         }
 
         die('done here');
@@ -230,20 +236,20 @@ class PageController extends ContentController
         $json    = json_decode(file_get_contents($file));
 
         foreach ($json as $record) {
-            $parentId = 0;
-            foreach ($record->categories as $name) {
-                $category = $this->getDataObject(ProdCategory::class, $name);
-                if (!$category) {
-                    $category       = ProdCategory::create();
-                    $category->Name = $name;
+            // $parentId = 0;
+            // foreach ($record->categories as $name) {
+            //     $category = $this->getDataObject(ProdCategory::class, $name);
+            //     if (!$category) {
+            //         $category       = ProdCategory::create();
+            //         $category->Name = $name;
 
-                    if ($parentId) {
-                        $category->ParentID = $parentId;
-                    }
+            //         if ($parentId) {
+            //             $category->ParentID = $parentId;
+            //         }
 
-                    $parentId = $category->write();
-                }
-            }
+            //         $parentId = $category->write();
+            //     }
+            // }
 
             // if (!$this->getDataObject(ProdBrand::class, $record->brand)) {
             //     $brand       = ProdBrand::create();

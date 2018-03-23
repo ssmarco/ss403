@@ -56,14 +56,14 @@
       <% if $SiteConfig.FooterLogoLink %>
         href="$SiteConfig.FooterLogoLink">
       <% else %>
-        href="http://newzealand.govt.nz/">
+        href="http://cwp.govt.nz/">
       <% end_if %>
 
       <img
       <% if $SiteConfig.FooterLogo %>
         src="$SiteConfig.FooterLogo.URL"
       <% else %>
-        src="$ThemeDir(watea)/images/newzealand-government-footer.png"
+        src="$ThemeDir(watea)/images/cwp-logo.png"
       <% end_if %>
 
       <% if $SiteConfig.FooterLogoDescription %>
