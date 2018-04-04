@@ -4,14 +4,14 @@ Name: myproject
 SilverStripe\Core\Manifest\ModuleManifest:
   project: mysite
 
-Product:
-  extensions:
-    - ProductExtension
-    - 'Marcz\Search\Extensions\SearchListDataListener'
-
-# SilverStripe\ORM\DataObject:
+# Product:
 #   extensions:
-#     - Marcz\Search\Extensions\SearchListDataObject
+#     - ProductExtension
+#     - 'Marcz\Search\Extensions\SearchDataListener'
+
+SilverStripe\ORM\DataObject:
+  extensions:
+    - Marcz\Search\Extensions\SearchDataListener
 
 Marcz\Search\Config:
   indices:
@@ -20,4 +20,5 @@ Marcz\Search\Config:
   clients:
     - name: 'Algolia'
       write: true
+      export: 'json'
       class: 'Marcz\Algolia\AlgoliaClient'
