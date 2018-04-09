@@ -54,22 +54,24 @@ class PageController extends ContentController
 
     public function marcz()
     {
-        $pages = Page::get();
-        var_dump($pages->count());
-        echo($pages->limit(0, 5)->sql());
-        return;
-        var_dump(Environment::getEnv('SS_ALGOLIA_SEARCH_KEY'));
-        $searchList = SearchList::create();
+        // $pages = Page::get();
+        // var_dump($pages->count());
+        // echo($pages->limit(0, 5)->sql());
+        // return;
+        // var_dump(Environment::getEnv('SS_ALGOLIA_SEARCH_KEY'));
+        var_dump($this->search('hello', 'Pages', 'Algolia'));
+
+        // $searchList = SearchList::create();
         // $searchList->filter('Keyword', ['charlie', 'sheila', ])
         //     ->exclude('Key');
 
-        $exporter = Exporter::create();
+        // $exporter = Exporter::create();
         // $exporter->export($dataClass);
 
-        $indices    = Config::config()->get('clients');
-        $inst       = Config::create();
+        // $indices    = Config::config()->get('clients');
+        // $inst       = Config::create();
 
-        var_dump($indices, $searchList, $inst->details(), $exporter);
+        // var_dump($indices, $searchList, $inst->details(), $exporter);
         exit;
     }
 
