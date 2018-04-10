@@ -12,7 +12,9 @@ SilverStripe\Core\Manifest\ModuleManifest:
 SilverStripe\ORM\DataObject:
   extensions:
     - Marcz\Search\Extensions\SearchDataListener
-
+SilverStripe\CMS\Controllers\ContentController:
+  extensions:
+    - Marcz\Search\Extensions\SearchContentExtension
 Marcz\Search\Config:
   indices:
     - name: 'Products'
