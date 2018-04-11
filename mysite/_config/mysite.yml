@@ -22,5 +22,6 @@ Marcz\Search\Config:
   clients:
     - name: 'Algolia'
       write: true
+      delete: true
       export: 'json'
       class: 'Marcz\Algolia\AlgoliaClient'

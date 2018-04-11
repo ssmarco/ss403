@@ -59,7 +59,12 @@ class PageController extends ContentController
         // echo($pages->limit(0, 5)->sql());
         // return;
         // var_dump(Environment::getEnv('SS_ALGOLIA_SEARCH_KEY'));
-        var_dump($this->search('hello', 'Pages', 'Algolia'));
+        // $session = $this->getRequest()->getSession();
+        // $session->set('SearchListRememberedClient', 'MongoDB');
+
+        // var_dump($this->search('hello', 'Pages', 'Algolia'));
+        $search = $this->createSearch('hello');
+        var_dump($search->fetch());
 
         // $searchList = SearchList::create();
         // $searchList->filter('Keyword', ['charlie', 'sheila', ])
@@ -72,6 +77,9 @@ class PageController extends ContentController
         // $inst       = Config::create();
 
         // var_dump($indices, $searchList, $inst->details(), $exporter);
+
+        // var_dump('get', $session->get('SearchListRememberedClient'));
+
         exit;
     }
 
