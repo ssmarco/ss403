@@ -19,6 +19,21 @@ Marcz\Search\Config:
   indices:
     - name: 'Products'
       class: 'Product'
+      has_one: true
+      has_many: true
+      many_many: true
+      searchableAttributes:
+        - 'Brand'
+        - 'Name'
+        - 'Categories'
+        - 'unordered(Content)'
+      attributesForFaceting:
+        - 'Brand'
+        - 'Type'
+        - 'Categories'
+        - 'Price'
+      customRanking:
+        - 'desc(Popularity)'
   clients:
     - name: 'Algolia'
       write: true
