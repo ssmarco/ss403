@@ -24,14 +24,18 @@ Marcz\Search\Config:
       many_many: true
       searchableAttributes:
         - 'Brand'
+        - 'Type'
         - 'Name'
         - 'Categories'
+        - 'Price'
+        - 'PriceRange'
         - 'unordered(Content)'
       attributesForFaceting:
         - 'Brand'
         - 'Type'
         - 'Categories'
         - 'Price'
+        - 'PriceRange'
       customRanking:
         - 'desc(Popularity)'
   clients:

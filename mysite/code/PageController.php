@@ -59,12 +59,28 @@ class PageController extends ContentController
         // echo($pages->limit(0, 5)->sql());
         // return;
         // var_dump(Environment::getEnv('SS_ALGOLIA_SEARCH_KEY'));
-        // $session = $this->getRequest()->getSession();
-        // $session->set('SearchListRememberedClient', 'MongoDB');
 
         // var_dump($this->search('hello', 'Pages', 'Algolia'));
-        $search = $this->createSearch('hello');
+
+        /**
+         * By design, Algolia doesn’t natively support infix/suffix matching and
+         * therefore won’t find substrings starting at a non-zero index within a string.
+         * Only prefix matching is natively supported.
+         * @see https://www.algolia.com/doc/tutorials/indexing/advanced/how-can-i-make-queries-within-the-middle-of-a-word/
+         */
+        $search = $this->createSearch('case');
+        $search->filter('Type', ['Non ipad cases', 'Ipad cases']);
+        $search->filter([
+            'Brand' => [
+                'Apple', 'Amazon'
+            ]
+        ]);
+        // $search->setPageNumber(4);
+        // $search->setPageLength(5);
+        var_dump($search);
         var_dump($search->fetch());
+        // $session = $this->getRequest()->getSession();
+        // var_dump($session->get('SearchListRememberedClient'));
 
         // $searchList = SearchList::create();
         // $searchList->filter('Keyword', ['charlie', 'sheila', ])
